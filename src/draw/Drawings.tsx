@@ -1,24 +1,33 @@
-import React, { useEffect } from 'react';
+ import React, { useEffect } from 'react';
+import Drawing from './Draw';
 
-interface Drawings {
+export interface IDrawing {
   name: string;
   imageXML: string;
 }
 
 const Drawings = () => {
-  const [ pictures, setPictures ] =  React.useState<Drawings[]>([]);
+  const [pictures, setPictures] = React.useState<IDrawing[]>([]);
+  const [selectedItem, setSelectedItem] = React.useState<IDrawing>();
 
-  useEffect( () => { 
-  setPictures(JSON.parse(localStorage.getItem("Drawings")||"[]"))
-    
+  useEffect(() => {
+    setPictures(JSON.parse(localStorage.getItem("Drawings") || "[]"))
 
-   }, []);
 
-  return(
+  }, []);
+
+  const itemClickHanlder = (e: any) => {
+    setSelectedItem(pictures[e.target.value]);
+  }
+
+  return (
     <React.Fragment>
-    <ul>
-      {pictures.map(picture => <li>{picture.name}</li>)}
-    </ul>
+      {selectedItem ? <Drawing close={() => setSelectedItem(undefined)} drawing={selectedItem} /> 
+      : 
+      <ul>
+        {pictures.map((picture, idx) => <li><button onClick={itemClickHanlder} value={idx} >{picture.name}</button></li>)}
+      </ul>
+      }
     </React.Fragment>
   )
 }

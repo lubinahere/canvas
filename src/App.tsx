@@ -4,9 +4,9 @@ import './App.css';
 import Drawing from './draw/Draw';
 import Drawings from './draw/Drawings';
 
-function App() {
+const App = () => {
 
-  const [showDraw, setShowDraw] = React.useState(false)
+  const [showDraw, setShowDraw] = React.useState(false);
   const toggleDraw = () => setShowDraw(!showDraw);
 
   return (
